@@ -10,12 +10,13 @@ import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 import io.github.mattidragon.extendeddrawers.block.DrawerBlock;
 import io.github.mattidragon.extendeddrawers.block.base.NetworkBlockWithEntity;
 import io.github.mattidragon.extendeddrawers.block.entity.DrawerBlockEntity;
-import io.github.mattidragon.extendeddrawers.registry.ModItems;
+import io.github.mattidragon.extendeddrawers.storage.DrawerSlot;
 import net.extendeddrawersaddon.init.ConfigInit;
 import net.fabricmc.fabric.api.transfer.v1.item.ItemVariant;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemStack;
 import net.minecraft.screen.NamedScreenHandlerFactory;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
@@ -36,20 +37,20 @@ public abstract class DrawerBlockMixin extends NetworkBlockWithEntity<DrawerBloc
     @Inject(method = "onUse", at = @At(value = "FIELD", target = "Lio/github/mattidragon/extendeddrawers/block/entity/DrawerBlockEntity;storages:[Lio/github/mattidragon/extendeddrawers/storage/DrawerSlot;", ordinal = 0), cancellable = true, locals = LocalCapture.CAPTURE_FAILSOFT)
     private void onUseMixin(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit, CallbackInfoReturnable<ActionResult> info, Vec2f internalPos, int slot,
             DrawerBlockEntity drawer) {
-        if (player.isSneaking()) {
-            if (player.getStackInHand(hand).isEmpty()) {
-                if (!world.isClient()) {
-                    player.openHandledScreen(state.createScreenHandlerFactory(world, pos));
-                }
+        if (player.isSneaking() && player.getStackInHand(hand).isEmpty()) {
+            if (!world.isClient()) {
+                player.openHandledScreen(state.createScreenHandlerFactory(world, pos));
+            }
+            info.setReturnValue(ActionResult.success(world.isClient()));
+        }
+    }
+
+    @Inject(method = "changeLimiter", at = @At(value = "INVOKE", target = "Lio/github/mattidragon/extendeddrawers/storage/DrawerSlot;changeLimiter(Lnet/fabricmc/fabric/api/transfer/v1/item/ItemVariant;Lnet/minecraft/world/World;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/util/math/Direction;Lnet/minecraft/entity/player/PlayerEntity;)Z"), cancellable = true, locals = LocalCapture.CAPTURE_FAILSOFT)
+    private void changeLimiterMixin(BlockState state, World world, BlockPos pos, Vec3d hitPos, Direction side, PlayerEntity player, ItemStack stack, CallbackInfoReturnable<ActionResult> info,
+            Vec2f facePos, DrawerSlot storage) {
+        if (storage.hasLimiter()) {
+            if (storage.changeLimiter(ItemVariant.blank(), world, pos, side, player)) {
                 info.setReturnValue(ActionResult.success(world.isClient()));
-            } else {
-                var storage = drawer.storages[slot];
-                if (storage.hasLimiter() && player.getStackInHand(hand).isOf(ModItems.LIMITER)) {
-                    if (!world.isClient()) {
-                        storage.changeLimiter(ItemVariant.blank(), world, pos, hit.getSide(), player);
-                    }
-                    info.setReturnValue(ActionResult.success(world.isClient()));
-                }
             }
         }
     }

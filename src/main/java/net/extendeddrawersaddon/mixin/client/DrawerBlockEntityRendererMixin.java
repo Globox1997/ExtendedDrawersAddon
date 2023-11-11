@@ -1,6 +1,7 @@
 package net.extendeddrawersaddon.mixin.client;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.function.Function;
 
 import org.spongepowered.asm.mixin.Mixin;
@@ -58,6 +59,20 @@ public abstract class DrawerBlockEntityRendererMixin extends AbstractDrawerBlock
     @Inject(method = "render", at = @At(value = "INVOKE_ASSIGN", target = "Lio/github/mattidragon/extendeddrawers/block/entity/DrawerBlockEntity;getPos()Lnet/minecraft/util/math/BlockPos;"))
     private void renderMixin(DrawerBlockEntity drawer, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay, CallbackInfo info) {
         this.showDrawerSlotCount = ((DrawerStorageAccess) (Object) drawer.storages[0]).getShowDrawerSlotCount();
+    }
+
+    @Override
+    public void renderIcons(List<Sprite> icons, boolean small, int light, int overlay, MatrixStack matrices, VertexConsumerProvider vertexConsumers) {
+        matrices.push();
+        if (!ConfigInit.CONFIG.showDrawerIcons) {
+            if (small) {
+                matrices.translate(0.145D, -0.042D, -0.08D);
+            } else {
+                matrices.translate(0.35D, -0.02D, -0.08D);
+            }
+        }
+        super.renderIcons(icons, small, light, overlay, matrices, vertexConsumers);
+        matrices.pop();
     }
 
     @Override

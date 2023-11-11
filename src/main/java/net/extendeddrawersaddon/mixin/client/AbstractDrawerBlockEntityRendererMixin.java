@@ -30,15 +30,13 @@ public class AbstractDrawerBlockEntityRendererMixin {
 
     @Inject(method = "renderText", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/util/math/MatrixStack;scale(FFF)V", ordinal = 1))
     private void renderTextMixin(String amount, boolean small, int light, MatrixStack matrices, VertexConsumerProvider vertexConsumers, CallbackInfo info) {
-        // check if DrawerBlockEntityRenderer or ShadowDrawerBlockEntityRenderer? CompactingBlockEntityRenderer issue
-        // System.out.println();
-        // if (small) {
-        //     matrices.translate(0.0D, -0.027D, 0.09D);
-        //     matrices.scale(0.5f, 0.5f, 0.5f);
-        // } else {
-        //     matrices.translate(0.0D, -0.02D, 0.09D);
-        //     matrices.scale(0.7f, 0.7f, 0.7f);
-        // }
+        if (small) {
+            matrices.translate(0.0D, -0.027D, 0.09D);
+            matrices.scale(0.5f, 0.5f, 0.5f);
+        } else {
+            matrices.translate(0.0D, -0.02D, 0.09D);
+            matrices.scale(0.7f, 0.7f, 0.7f);
+        }
     }
 
     @Inject(method = "renderItem", at = @At("HEAD"), cancellable = true)

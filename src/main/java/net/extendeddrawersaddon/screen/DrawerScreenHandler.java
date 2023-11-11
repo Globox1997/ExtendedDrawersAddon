@@ -60,13 +60,6 @@ public class DrawerScreenHandler extends ScreenHandler {
                 this.inventory.setStack(3, new ItemStack(ModItems.DUPE_WAND));
             }
 
-            // if (drawerSlots.get(0).isDuping()) {
-            // this.inventory.setStack(2, new ItemStack(ModItems.DUPE_WAND));
-            // }
-            // if (drawerSlots.get(0).isHidden()) {
-            // this.inventory.setStack(3, new ItemStack(Items.BLACK_DYE));
-            // }
-
             this.inventory.setStack(4, drawerSlots.get(0).getItem().toStack((int) drawerSlots.get(0).getTrueAmount()));
             if (drawerSlots.get(0).getUpgrade() != null) {
                 this.inventory.setStack(5, drawerSlots.get(0).getUpgrade().getDefaultStack());
@@ -89,7 +82,8 @@ public class DrawerScreenHandler extends ScreenHandler {
             }
         }
 
-        this.addSlot(new Slot(inventory, 0, 53, 54) {
+        int slotExtraX = isCreativeScreen ? 0 : 9;
+        this.addSlot(new Slot(inventory, 0, 53 + slotExtraX, 54) {
             @Override
             public boolean canInsert(ItemStack stack) {
                 return stack.isOf(ModItems.LOCK);
@@ -122,7 +116,7 @@ public class DrawerScreenHandler extends ScreenHandler {
                 return 1;
             }
         });
-        this.addSlot(new Slot(inventory, 1, 71, 54) {
+        this.addSlot(new Slot(inventory, 1, 71 + slotExtraX, 54) {
             @Override
             public boolean canInsert(ItemStack stack) {
                 return stack.isOf(Items.LAVA_BUCKET);
@@ -154,19 +148,17 @@ public class DrawerScreenHandler extends ScreenHandler {
                 return 1;
             }
         });
-        this.addSlot(new Slot(inventory, 2, 89, 54) {
+        this.addSlot(new Slot(inventory, 2, 89 + slotExtraX, 54) {
             @Override
             public boolean canInsert(ItemStack stack) {
-                return stack.isOf(ModItems.DUPE_WAND);
+                return stack.isOf(Items.WRITABLE_BOOK);
             }
 
             @Override
             public void setStackNoCallbacks(ItemStack stack) {
-                if (!world.isClient() && !stack.isEmpty() && stack.isOf(ModItems.DUPE_WAND)) {
+                if (!world.isClient() && !stack.isEmpty() && stack.isOf(Items.WRITABLE_BOOK)) {
                     for (int i = 0; i < drawerSlotSize; i++) {
-                        // TEST
                         ((DrawerStorageAccess) (Object) drawerSlots.get(i)).setShowDrawerSlotCount(true);
-                        // drawerSlots.get(i).setDuping(true);
                     }
                 }
                 super.setStackNoCallbacks(stack);
@@ -177,7 +169,6 @@ public class DrawerScreenHandler extends ScreenHandler {
                 if (!player.getWorld().isClient()) {
                     for (int i = 0; i < drawerSlotSize; i++) {
                         ((DrawerStorageAccess) (Object) drawerSlots.get(i)).setShowDrawerSlotCount(false);
-                        // drawerSlots.get(i).setDuping(false);
                     }
 
                 }
@@ -189,15 +180,15 @@ public class DrawerScreenHandler extends ScreenHandler {
                 return 1;
             }
         });
-        this.addSlot(new Slot(inventory, 3, 107, 54) {
+        this.addSlot(new Slot(inventory, 3, 107 + slotExtraX, 54) {
             @Override
             public boolean canInsert(ItemStack stack) {
-                return stack.isOf(Items.BLACK_DYE);
+                return stack.isOf(ModItems.DUPE_WAND);
             }
 
             @Override
             public void setStackNoCallbacks(ItemStack stack) {
-                if (!world.isClient() && !stack.isEmpty() && stack.isOf(Items.BLACK_DYE)) {
+                if (!world.isClient() && !stack.isEmpty() && stack.isOf(ModItems.DUPE_WAND)) {
                     for (int i = 0; i < drawerSlotSize; i++) {
                         drawerSlots.get(i).setHidden(true);
                     }
@@ -216,12 +207,17 @@ public class DrawerScreenHandler extends ScreenHandler {
             }
 
             @Override
+            public boolean isEnabled() {
+                return isCreativeScreen;
+            }
+
+            @Override
             public int getMaxItemCount() {
                 return 1;
             }
         });
 
-        int slotExtraX = this.inventory.size() > 6 ? 0 : 20;
+        slotExtraX = this.inventory.size() > 6 ? 0 : 20;
         int slotExtraY = this.inventory.size() < 9 ? 11 : 0;
 
         // Slot top left
@@ -424,7 +420,7 @@ public class DrawerScreenHandler extends ScreenHandler {
         Slot slot = this.slots.get(slotId);
         if (slot != null && slot.hasStack()) {
             ItemStack originalStack = slot.getStack();
-            if (slotId > 11) {
+            if (slot.getIndex() > 11) {
                 if (originalStack.isOf(ModItems.LOCK)) {
                     if (this.slots.get(0).getStack().isEmpty()) {
                         this.slots.get(0).setStack(originalStack.copyWithCount(1));
@@ -437,13 +433,13 @@ public class DrawerScreenHandler extends ScreenHandler {
                         originalStack.decrement(1);
                         return originalStack;
                     }
-                } else if (originalStack.isOf(ModItems.DUPE_WAND)) {
+                } else if (originalStack.isOf(Items.WRITABLE_BOOK)) {
                     if (this.slots.get(2).getStack().isEmpty()) {
                         this.slots.get(2).setStack(originalStack.copyWithCount(1));
                         originalStack.decrement(1);
                         return originalStack;
                     }
-                } else if (originalStack.isOf(Items.BLACK_DYE)) {
+                } else if (originalStack.isOf(ModItems.DUPE_WAND) && isCreativeScreen) {
                     if (this.slots.get(3).getStack().isEmpty()) {
                         this.slots.get(3).setStack(originalStack.copyWithCount(1));
                         originalStack.decrement(1);

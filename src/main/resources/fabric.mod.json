@@ -2,14 +2,15 @@
 	"schemaVersion": 1,
 	"id": "extendeddrawersaddon",
 	"version": "${version}",
-	"name": "Example mod",
-	"description": "This is an example description! Tell everyone what your mod is about!",
+	"name": "ExtendedDrawersAddon",
+	"description": "An addon for the ExtendedDrawers mod",
 	"authors": [
 		"Globox_Z"
 	],
 	"contact": {
-		"homepage": "https://fabricmc.net/",
-		"sources": "https://github.com/FabricMC/fabric-example-mod"
+		"homepage": "https://www.curseforge.com/minecraft/mc-mods/extendeddrawersaddon",
+		"sources": "https://github.com/Globox1997/ExtendedDrawersAddon",
+		"issues": "https://github.com/Globox1997/ExtendedDrawersAddon/issues"
 	},
 	"license": "MIT",
 	"icon": "assets/extendeddrawersaddon/icon.png",
@@ -39,5 +40,11 @@
 	},
 	"suggests": {
 		"another-mod": "*"
+	},
+	"custom": {
+		"mc-publish": {
+			"modrinth": "X",
+			"curseforge": 0
+		}
 	}
 }

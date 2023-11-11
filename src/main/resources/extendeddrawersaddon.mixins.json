@@ -1,0 +1,19 @@
+{
+	"required": true,
+	"package": "net.extendeddrawersaddon.mixin",
+	"compatibilityLevel": "JAVA_17",
+	"mixins": [
+		"DrawerBlockMixin",
+		"DrawerBlockEntityMixin",
+		"DrawerStorageMixin",
+		"DrawerStorageSettingsMixin"
+	],
+	"client": [
+		"client.DrawerBlockEntityRendererMixin",
+		"client.AbstractDrawerBlockEntityRendererMixin",
+		"client.AbstractDrawerBlockEntityRendererAccessor"
+	],
+	"injectors": {
+		"defaultRequire": 1
+	}
+}

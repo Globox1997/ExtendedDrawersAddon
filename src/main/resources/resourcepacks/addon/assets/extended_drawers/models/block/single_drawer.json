@@ -1,0 +1,6 @@
+{
+  "parent": "extendeddrawersaddon:addon_drawer_template",
+  "textures": {
+    "front": "extended_drawers:block/single_drawer"
+  }
+}

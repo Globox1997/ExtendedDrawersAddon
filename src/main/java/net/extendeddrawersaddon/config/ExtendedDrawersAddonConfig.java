@@ -24,4 +24,5 @@ public class ExtendedDrawersAddonConfig implements ConfigData {
     @Comment("Drawer items affect all slots")
     public boolean affectAllSlots = true;
     public boolean showDrawerIcons = false;
+    public boolean flatTextures = false;
 }

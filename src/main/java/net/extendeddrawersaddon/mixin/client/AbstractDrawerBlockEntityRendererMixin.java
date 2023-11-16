@@ -9,6 +9,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import io.github.mattidragon.extendeddrawers.client.renderer.AbstractDrawerBlockEntityRenderer;
+import net.extendeddrawersaddon.init.ConfigInit;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.transfer.v1.item.ItemVariant;
@@ -44,23 +45,33 @@ public class AbstractDrawerBlockEntityRendererMixin {
         if (itemVariant.isBlank()) {
             return;
         }
+        if (!ConfigInit.CONFIG.flatTextures) {
+            matrices.push();
+            if (small) {
+                matrices.scale(0.25f, 0.25f, 0.25f);
+                matrices.translate(0.0D, 0.0D, -0.21D);
+            } else {
+                matrices.scale(0.5f, 0.5f, 0.5f);
+                matrices.translate(0.0D, 0.0D, -0.11D);
+            }
 
-        matrices.push();
-        if (small) {
-            matrices.scale(0.25f, 0.25f, 0.25f);
-            matrices.translate(0.0D, 0.0D, -0.21D);
-        } else {
-            matrices.scale(0.5f, 0.5f, 0.5f);
-            matrices.translate(0.0D, 0.0D, -0.11D);
+            var stack = itemVariant.toStack();
+            var model = itemRenderer.getModel(stack, world, null, seed);
+
+            itemRenderer.renderItem(stack, ModelTransformationMode.FIXED, false, matrices, vertexConsumers, light, OverlayTexture.DEFAULT_UV, model);
+
+            matrices.pop();
+
+            info.cancel();
         }
+    }
 
-        var stack = itemVariant.toStack();
-        var model = itemRenderer.getModel(stack, world, null, seed);
-
-        itemRenderer.renderItem(stack, ModelTransformationMode.FIXED, false, matrices, vertexConsumers, light, OverlayTexture.DEFAULT_UV, model);
-
-        matrices.pop();
-
-        info.cancel();
+    @Inject(method = "renderItem", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/util/math/MatrixStack;multiplyPositionMatrix(Lorg/joml/Matrix4f;)V"))
+    private void renderFlatItemMixin(ItemVariant itemVariant, boolean small, int light, MatrixStack matrices, VertexConsumerProvider vertexConsumers, World world, int seed, CallbackInfo info) {
+        if (small) {
+            matrices.translate(0.0D, 0.0D, -0.07D);
+        } else {
+            matrices.translate(0.0D, 0.0D, -0.07D);
+        }
     }
 }

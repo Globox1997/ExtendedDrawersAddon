@@ -2,6 +2,7 @@
     "text.autoconfig.extendeddrawersaddon.title": "ExtendedDrawersAddon Config",
     "text.autoconfig.extendeddrawersaddon.option.affectAllSlots": "Affect All Slots",
     "text.autoconfig.extendeddrawersaddon.option.showDrawerIcons": "Show Drawer Icons",
+    "text.autoconfig.extendeddrawersaddon.option.flatTextures": "Flat Textures",
 
     "screen.drawer": "Drawer"
 }

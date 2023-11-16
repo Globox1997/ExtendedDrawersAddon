@@ -47,7 +47,7 @@ public abstract class DrawerBlockMixin extends NetworkBlockWithEntity<DrawerBloc
 
     @Inject(method = "changeLimiter", at = @At(value = "INVOKE", target = "Lio/github/mattidragon/extendeddrawers/storage/DrawerSlot;changeLimiter(Lnet/fabricmc/fabric/api/transfer/v1/item/ItemVariant;Lnet/minecraft/world/World;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/util/math/Direction;Lnet/minecraft/entity/player/PlayerEntity;)Z"), cancellable = true, locals = LocalCapture.CAPTURE_FAILSOFT)
     private void changeLimiterMixin(BlockState state, World world, BlockPos pos, Vec3d hitPos, Direction side, PlayerEntity player, ItemStack stack, CallbackInfoReturnable<ActionResult> info,
-            Vec2f facePos, DrawerSlot storage) {
+            Vec2f facePos, DrawerBlockEntity drawer, DrawerSlot storage) {
         if (storage.hasLimiter()) {
             if (storage.changeLimiter(ItemVariant.blank(), world, pos, side, player)) {
                 info.setReturnValue(ActionResult.success(world.isClient()));

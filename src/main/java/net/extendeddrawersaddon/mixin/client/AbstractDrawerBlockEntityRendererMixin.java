@@ -18,6 +18,7 @@ import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.item.ItemRenderer;
 import net.minecraft.client.render.model.json.ModelTransformationMode;
 import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.item.BlockItem;
 import net.minecraft.world.World;
 
 @Environment(EnvType.CLIENT)
@@ -53,6 +54,9 @@ public class AbstractDrawerBlockEntityRendererMixin {
             } else {
                 matrices.scale(0.5f, 0.5f, 0.5f);
                 matrices.translate(0.0D, 0.0D, -0.11D);
+            }
+            if ((ConfigInit.CONFIG.blockRenderScale < 0.999f || ConfigInit.CONFIG.blockRenderScale > 1.001) && itemVariant.getItem() instanceof BlockItem) {
+                matrices.scale(ConfigInit.CONFIG.blockRenderScale, ConfigInit.CONFIG.blockRenderScale, ConfigInit.CONFIG.blockRenderScale);
             }
 
             var stack = itemVariant.toStack();

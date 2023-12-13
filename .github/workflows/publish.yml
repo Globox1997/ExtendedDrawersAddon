@@ -46,7 +46,7 @@ jobs:
           dependencies: |
             fabric-api | depends | *
             cloth-config | depends | *
-            extended_drawers | depends | *
+            extended-drawers | depends | *
             modelfix | depends | *
 
           changelog-file: CHANGELOG.md

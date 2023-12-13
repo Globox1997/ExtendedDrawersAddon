@@ -59,22 +59,21 @@ public class DrawerScreenHandler extends ScreenHandler {
             if (drawerSlots.get(0).isDuping()) {
                 this.inventory.setStack(3, new ItemStack(ModItems.DUPE_WAND));
             }
-
-            this.inventory.setStack(4, drawerSlots.get(0).getItem().toStack((int) drawerSlots.get(0).getTrueAmount()));
+            this.inventory.setStack(4, drawerSlots.get(0).getResource().toStack((int) drawerSlots.get(0).getTrueAmount()));
             if (drawerSlots.get(0).getUpgrade() != null) {
                 this.inventory.setStack(5, drawerSlots.get(0).getUpgrade().getDefaultStack());
             }
             if (drawerSlotSize > 1) {
-                this.inventory.setStack(6, drawerSlots.get(1).getItem().toStack((int) drawerSlots.get(1).getTrueAmount()));
+                this.inventory.setStack(6, drawerSlots.get(1).getResource().toStack((int) drawerSlots.get(1).getTrueAmount()));
                 if (drawerSlots.get(1).getUpgrade() != null) {
                     this.inventory.setStack(7, drawerSlots.get(1).getUpgrade().getDefaultStack());
                 }
                 if (drawerSlotSize > 2) {
-                    this.inventory.setStack(8, drawerSlots.get(2).getItem().toStack((int) drawerSlots.get(2).getTrueAmount()));
+                    this.inventory.setStack(8, drawerSlots.get(2).getResource().toStack((int) drawerSlots.get(2).getTrueAmount()));
                     if (drawerSlots.get(2).getUpgrade() != null) {
                         this.inventory.setStack(9, drawerSlots.get(2).getUpgrade().getDefaultStack());
                     }
-                    this.inventory.setStack(10, drawerSlots.get(3).getItem().toStack((int) drawerSlots.get(3).getTrueAmount()));
+                    this.inventory.setStack(10, drawerSlots.get(3).getResource().toStack((int) drawerSlots.get(3).getTrueAmount()));
                     if (drawerSlots.get(3).getUpgrade() != null) {
                         this.inventory.setStack(11, drawerSlots.get(3).getUpgrade().getDefaultStack());
                     }

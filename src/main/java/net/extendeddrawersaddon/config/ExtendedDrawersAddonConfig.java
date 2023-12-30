@@ -8,7 +8,7 @@ import me.shedaniel.cloth.clothconfig.shadowed.blue.endless.jankson.Comment;
 @Config.Gui.Background("minecraft:textures/block/stone.png")
 public class ExtendedDrawersAddonConfig implements ConfigData {
 
-    @Comment("Drawer items affect all slots")
+    @Comment("Drawer items affect all slots, used for hiding only")
     public boolean affectAllSlots = true;
     public boolean showDrawerIcons = false;
     public boolean flatTextures = false;

@@ -18,16 +18,14 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.network.PacketByteBuf;
 import net.minecraft.screen.ScreenHandler;
-import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.Text;
 import net.minecraft.util.math.BlockPos;
 
 @Mixin(DrawerBlockEntity.class)
-public abstract class DrawerBlockEntityMixin extends StorageDrawerBlockEntity implements ExtendedScreenHandlerFactory {
+public abstract class DrawerBlockEntityMixin extends StorageDrawerBlockEntity implements ExtendedScreenHandlerFactory<DrawerScreenHandler> {
 
-    @Shadow
+    @Shadow(remap = false)
     @Mutable
     @Final
     public DrawerSlot[] storages;
@@ -48,11 +46,6 @@ public abstract class DrawerBlockEntityMixin extends StorageDrawerBlockEntity im
             list.add(storages[i]);
         }
         return new DrawerScreenHandler(syncId, playerInventory, list, 4 + list.size() * 2, this.getPos(), this.getCachedState().get(DrawerBlock.FACING));
-    }
-
-    @Override
-    public void writeScreenOpeningData(ServerPlayerEntity player, PacketByteBuf buf) {
-        buf.writeInt(storages.length);
     }
 
 }

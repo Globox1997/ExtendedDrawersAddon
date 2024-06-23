@@ -11,7 +11,7 @@ import net.minecraft.util.Identifier;
 @Environment(EnvType.CLIENT)
 public class DrawerScreen extends HandledScreen<DrawerScreenHandler> {
 
-    private static final Identifier TEXTURE = new Identifier("extendeddrawersaddon", "textures/gui/drawer.png");
+    private static final Identifier TEXTURE = Identifier.of("extendeddrawersaddon", "textures/gui/drawer.png");
 
     public DrawerScreen(DrawerScreenHandler handler, PlayerInventory inventory, Text title) {
         super(handler, inventory, title);
@@ -19,7 +19,6 @@ public class DrawerScreen extends HandledScreen<DrawerScreenHandler> {
 
     @Override
     public void render(DrawContext context, int mouseX, int mouseY, float delta) {
-        renderBackground(context);
         context.drawTexture(TEXTURE, this.x, this.y, 0, 0, backgroundWidth, backgroundHeight);
 
         int size = this.handler.getInventory().size();

@@ -31,7 +31,7 @@
 		"extendeddrawersaddon.mixins.json"
 	],
 	"depends": {
-		"java": ">=17",
+		"java": ">=21",
 		"minecraft": ">=${minecraft_version}",
 		"fabric-api": ">=${fabric_version}",
 		"fabricloader": ">=${loader_version}",

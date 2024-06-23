@@ -11,7 +11,7 @@ public class EventInit {
 
     public static void init() {
         FabricLoader.getInstance().getModContainer("extendeddrawersaddon")
-                .map(container -> ResourceManagerHelper.registerBuiltinResourcePack(new Identifier("extendeddrawersaddon", "addon"), container, Text.literal("Extended Drawers Addon Pack"),
+                .map(container -> ResourceManagerHelper.registerBuiltinResourcePack(Identifier.of("extendeddrawersaddon", "addon"), container, Text.literal("Extended Drawers Addon Pack"),
                         ResourcePackActivationType.ALWAYS_ENABLED))
                 .filter(success -> !success).ifPresent(success -> ExtendedDrawersAddonMain.LOGGER.warn("Could not register built-in resource pack by extendeddrawersaddon."));
     }

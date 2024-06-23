@@ -17,7 +17,6 @@ import net.minecraft.inventory.Inventory;
 import net.minecraft.inventory.SimpleInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
-import net.minecraft.network.PacketByteBuf;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.screen.slot.Slot;
 import net.minecraft.util.math.BlockPos;
@@ -34,8 +33,8 @@ public class DrawerScreenHandler extends ScreenHandler {
     private final Direction direction;
     private final boolean isCreativeScreen;
 
-    public DrawerScreenHandler(int syncId, PlayerInventory playerInventory, PacketByteBuf buf) {
-        this(syncId, playerInventory, new ArrayList<DrawerSlot>(), 4 + buf.readInt() * 2, null, null);
+    public DrawerScreenHandler(int syncId, PlayerInventory playerInventory, int slotCount) {
+        this(syncId, playerInventory, new ArrayList<DrawerSlot>(), 4 + slotCount * 2, null, null);
     }
 
     public DrawerScreenHandler(int syncId, PlayerInventory playerInventory, List<DrawerSlot> drawerSlots, int slotSize, BlockPos pos, Direction direction) {

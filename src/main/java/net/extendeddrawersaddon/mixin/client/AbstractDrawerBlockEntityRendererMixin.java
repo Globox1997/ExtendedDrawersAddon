@@ -70,7 +70,7 @@ public class AbstractDrawerBlockEntityRendererMixin {
         }
     }
 
-    @Inject(method = "renderItem", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/util/math/MatrixStack;multiplyPositionMatrix(Lorg/joml/Matrix4f;)V"))
+    @Inject(method = "renderItem", at = @At(value = "INVOKE", target = "Lorg/joml/Matrix4f;mul(Lorg/joml/Matrix4fc;)Lorg/joml/Matrix4f;"), remap = false)
     private void renderFlatItemMixin(ItemVariant itemVariant, boolean small, int light, MatrixStack matrices, VertexConsumerProvider vertexConsumers, World world, int seed, CallbackInfo info) {
         if (small) {
             matrices.translate(0.0D, 0.0D, -0.07D);

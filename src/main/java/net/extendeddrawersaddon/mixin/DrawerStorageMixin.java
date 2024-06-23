@@ -14,7 +14,7 @@ import net.minecraft.nbt.NbtCompound;
 @Mixin(DrawerStorage.class)
 public interface DrawerStorageMixin extends DrawerStorageAccess {
 
-    @Shadow
+    @Shadow(remap = false)
     Settings settings();
 
     @Override
@@ -38,7 +38,7 @@ public interface DrawerStorageMixin extends DrawerStorageAccess {
         nbt.putBoolean("ShowDrawerSlotCount", ((DrawerStorageAccess) settings()).getShowDrawerSlotCount());
     }
 
-    @Shadow
+    @Shadow(remap = false)
     default void update() {
     }
 

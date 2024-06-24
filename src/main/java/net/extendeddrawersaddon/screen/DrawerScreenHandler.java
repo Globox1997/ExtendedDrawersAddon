@@ -55,6 +55,9 @@ public class DrawerScreenHandler extends ScreenHandler {
             if (((DrawerStorageAccess) (Object) drawerSlots.get(0)).getShowDrawerSlotCount()) {
                 this.inventory.setStack(2, new ItemStack(Items.WRITABLE_BOOK));
             }
+
+            System.out.println("TEST: " + drawerSlots.get(0).isDuping());
+
             if (drawerSlots.get(0).isDuping()) {
                 this.inventory.setStack(3, new ItemStack(ModItems.DUPE_WAND));
             }
@@ -188,7 +191,7 @@ public class DrawerScreenHandler extends ScreenHandler {
             public void setStackNoCallbacks(ItemStack stack) {
                 if (!world.isClient() && !stack.isEmpty() && stack.isOf(ModItems.DUPE_WAND)) {
                     for (int i = 0; i < drawerSlotSize; i++) {
-                        drawerSlots.get(i).setHidden(true);
+                        drawerSlots.get(i).setDuping(true);
                     }
                 }
                 super.setStackNoCallbacks(stack);
@@ -419,7 +422,32 @@ public class DrawerScreenHandler extends ScreenHandler {
         if (slot != null && slot.hasStack()) {
             ItemStack originalStack = slot.getStack();
             if (slot.getIndex() > 11) {
-                if (originalStack.isOf(ModItems.LOCK)) {
+                if (originalStack.getItem() instanceof UpgradeItem) {
+                    if (this.slots.get(5).getStack().isEmpty()) {
+                        this.slots.get(5).setStack(originalStack.copyWithCount(1));
+                        originalStack.decrement(1);
+                        return originalStack;
+                    }
+                    if (this.inventory.size() > 6) {
+                        if (this.slots.get(7).getStack().isEmpty()) {
+                            this.slots.get(7).setStack(originalStack.copyWithCount(1));
+                            originalStack.decrement(1);
+                            return originalStack;
+                        }
+                        if (this.inventory.size() > 8) {
+                            if (this.slots.get(9).getStack().isEmpty()) {
+                                this.slots.get(9).setStack(originalStack.copyWithCount(1));
+                                originalStack.decrement(1);
+                                return originalStack;
+                            } else if (this.slots.get(11).getStack().isEmpty()) {
+                                this.slots.get(11).setStack(originalStack.copyWithCount(1));
+                                originalStack.decrement(1);
+                                return originalStack;
+                            }
+                        }
+                    }
+
+                } else if (originalStack.isOf(ModItems.LOCK)) {
                     if (this.slots.get(0).getStack().isEmpty()) {
                         this.slots.get(0).setStack(originalStack.copyWithCount(1));
                         originalStack.decrement(1);

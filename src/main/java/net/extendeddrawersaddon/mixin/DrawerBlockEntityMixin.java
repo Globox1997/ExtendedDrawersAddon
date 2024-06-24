@@ -12,6 +12,7 @@ import io.github.mattidragon.extendeddrawers.block.DrawerBlock;
 import io.github.mattidragon.extendeddrawers.block.entity.DrawerBlockEntity;
 import io.github.mattidragon.extendeddrawers.block.entity.StorageDrawerBlockEntity;
 import io.github.mattidragon.extendeddrawers.storage.DrawerSlot;
+import net.extendeddrawersaddon.network.packet.DrawerData;
 import net.extendeddrawersaddon.screen.DrawerScreenHandler;
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerFactory;
 import net.minecraft.block.BlockState;
@@ -19,11 +20,12 @@ import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.screen.ScreenHandler;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.Text;
 import net.minecraft.util.math.BlockPos;
 
 @Mixin(DrawerBlockEntity.class)
-public abstract class DrawerBlockEntityMixin extends StorageDrawerBlockEntity implements ExtendedScreenHandlerFactory<DrawerScreenHandler> {
+public abstract class DrawerBlockEntityMixin extends StorageDrawerBlockEntity implements ExtendedScreenHandlerFactory<DrawerData> {
 
     @Shadow(remap = false)
     @Mutable
@@ -42,10 +44,15 @@ public abstract class DrawerBlockEntityMixin extends StorageDrawerBlockEntity im
     @Override
     public ScreenHandler createMenu(int syncId, PlayerInventory playerInventory, PlayerEntity playerEntity) {
         List<DrawerSlot> list = new ArrayList<DrawerSlot>();
-        for (int i = 0; i < storages.length; i++) {
-            list.add(storages[i]);
+        for (int i = 0; i < this.storages.length; i++) {
+            list.add(this.storages[i]);
         }
         return new DrawerScreenHandler(syncId, playerInventory, list, 4 + list.size() * 2, this.getPos(), this.getCachedState().get(DrawerBlock.FACING));
+    }
+
+    @Override
+    public DrawerData getScreenOpeningData(ServerPlayerEntity player) {
+        return new DrawerData(this.storages.length);
     }
 
 }

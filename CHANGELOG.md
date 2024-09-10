@@ -1,6 +1,7 @@
 ### Added:
 - 
 ### Fixed:
-- 
+- Fixed upgrade dupe
+- Fixed general crash
 ### Changed:
-- Updated to mc 1.21.1
+- Enabled shift right click

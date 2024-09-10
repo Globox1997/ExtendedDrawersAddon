@@ -1,5 +1,6 @@
 package net.extendeddrawersaddon;
 
+import net.extendeddrawersaddon.init.ComponentInit;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -14,6 +15,7 @@ public class ExtendedDrawersAddonMain implements ModInitializer {
 
     @Override
     public void onInitialize() {
+        ComponentInit.init();
         ConfigInit.init();
         EventInit.init();
         ScreenInit.init();

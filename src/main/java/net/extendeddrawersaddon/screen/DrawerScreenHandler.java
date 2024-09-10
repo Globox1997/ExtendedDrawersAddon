@@ -3,6 +3,9 @@ package net.extendeddrawersaddon.screen;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.github.mattidragon.extendeddrawers.ExtendedDrawers;
+import io.github.mattidragon.extendeddrawers.config.ConfigData;
+import net.minecraft.text.Text;
 import org.jetbrains.annotations.Nullable;
 
 import io.github.mattidragon.extendeddrawers.item.UpgradeItem;
@@ -56,7 +59,7 @@ public class DrawerScreenHandler extends ScreenHandler {
                 this.inventory.setStack(2, new ItemStack(Items.WRITABLE_BOOK));
             }
 
-            System.out.println("TEST: " + drawerSlots.get(0).isDuping());
+//            System.out.println("TEST: " + drawerSlots.get(0).isDuping());
 
             if (drawerSlots.get(0).isDuping()) {
                 this.inventory.setStack(3, new ItemStack(ModItems.DUPE_WAND));
@@ -201,7 +204,7 @@ public class DrawerScreenHandler extends ScreenHandler {
             public void onTakeItem(PlayerEntity player, ItemStack stack) {
                 if (!player.getWorld().isClient()) {
                     for (int i = 0; i < drawerSlotSize; i++) {
-                        drawerSlots.get(i).setHidden(false);
+                        drawerSlots.get(i).setDuping(false);
                     }
                 }
                 super.onTakeItem(player, stack);

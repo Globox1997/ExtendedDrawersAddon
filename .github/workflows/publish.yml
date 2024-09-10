@@ -47,7 +47,7 @@ jobs:
             fabric-api | depends | *
             cloth-config | depends | *
             extended-drawers | depends | *
-            modelfix | depends | *
+            modelfix | suggests | *
 
           changelog-file: CHANGELOG.md
 

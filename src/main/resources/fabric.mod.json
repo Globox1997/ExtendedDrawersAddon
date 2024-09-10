@@ -36,11 +36,10 @@
 		"fabric-api": ">=${fabric_version}",
 		"fabricloader": ">=${loader_version}",
 		"cloth-config2": ">=${cloth_config_version}",
-		"extended_drawers": ">=${extended_drawers_version}",
-		"modelfix": "*"
+		"extended_drawers": ">=${extended_drawers_version}"
 	},
 	"suggests": {
-		"another-mod": "*"
+		"modelfix": "*"
 	},
 	"custom": {
 		"mc-publish": {

@@ -1,6 +1,6 @@
 ### Added:
 - 
 ### Fixed:
-- Fixed drawer crash
-### Changed:
 - 
+### Changed:
+- Updated to mc 1.21.1

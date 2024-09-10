@@ -1,5 +1,6 @@
 package net.extendeddrawersaddon.mixin;
 
+import net.minecraft.registry.RegistryWrapper;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -29,12 +30,12 @@ public interface DrawerStorageMixin extends DrawerStorageAccess {
     }
 
     @Inject(method = "readNbt", at = @At("TAIL"))
-    default void readNbtMixin(NbtCompound nbt, CallbackInfo info) {
+    default void readNbtMixin(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup, CallbackInfo info) {
         ((DrawerStorageAccess) settings()).setShowDrawerSlotCount(nbt.getBoolean("ShowDrawerSlotCount"));
     }
 
     @Inject(method = "writeNbt", at = @At("TAIL"))
-    default void writeNbtMixin(NbtCompound nbt, CallbackInfo info) {
+    default void writeNbtMixin(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup, CallbackInfo info) {
         nbt.putBoolean("ShowDrawerSlotCount", ((DrawerStorageAccess) settings()).getShowDrawerSlotCount());
     }
 
